@@ -1,36 +1,26 @@
-using System.Collections.Generic;
+using System;
 
 namespace TwitterStormTests {
     public class TwitesGenerator {
         private const int TwiteCharacterLimit = 160;
 
         public string[] Generate(string textsToTwite) {
-            var twiteList = new List<string>();
             if (string.IsNullOrWhiteSpace(textsToTwite)) {
-                return twiteList.ToArray();
+                return Array.Empty<string>();
             }
             
-            var splittedText = textsToTwite.ToCharArray();
-            var count = 0;
-            var characters = string.Empty;
-
-            for (int i = 0; i < splittedText.Length; i++) {
-                if (count == TwiteCharacterLimit) {
-                    twiteList.Add(characters);
-                    characters = string.Empty;
-                    count = 0;
-                }
-
-                characters += splittedText[i];
-
-                if (i == splittedText.Length - 1) {
-                    twiteList.Add(characters);
-                }
-
-                count++;
+            var totalSizeCharacter = (int)Math.Ceiling((double)textsToTwite.Length / TwiteCharacterLimit);
+            var twiterList = new string[totalSizeCharacter];
+            var characterSize = textsToTwite.Length;
+            
+            for (int i = 0; i < totalSizeCharacter; i++) {
+                var lengthToUse = Math.Min(characterSize, TwiteCharacterLimit);
+                var twite = textsToTwite.Substring(i * TwiteCharacterLimit, lengthToUse);
+                twiterList[i] = twite;
+                characterSize = characterSize - TwiteCharacterLimit;
             }
 
-            return twiteList.ToArray();
+            return twiterList;
         }
     }
 }
