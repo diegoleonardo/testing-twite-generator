@@ -2,19 +2,20 @@ using System.Collections.Generic;
 
 namespace TwitterStormTests {
     public class TwitesGenerator {
-        private const int TwiteLimit = 160;
+        private const int TwiteCharacterLimit = 160;
 
-        public string[] Generate(string textToSplit) {
+        public string[] Generate(string textsToTwite) {
             var twiteList = new List<string>();
-            if (string.IsNullOrWhiteSpace(textToSplit)) {
+            if (string.IsNullOrWhiteSpace(textsToTwite)) {
                 return twiteList.ToArray();
             }
-            var splittedText = textToSplit.ToCharArray();
+            
+            var splittedText = textsToTwite.ToCharArray();
             var count = 0;
             var characters = string.Empty;
 
             for (int i = 0; i < splittedText.Length; i++) {
-                if (count == TwiteLimit) {
+                if (count == TwiteCharacterLimit) {
                     twiteList.Add(characters);
                     characters = string.Empty;
                     count = 0;
